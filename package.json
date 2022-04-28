@@ -12,6 +12,8 @@
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@fontsource/nunito": "^4.5.8",
+    "@fontsource/open-sans": "^4.5.8",
     "browserslist": "^4.20.3",
     "framer-motion": "^6.3.2",
     "next": "12.1.4",

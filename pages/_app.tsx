@@ -4,6 +4,7 @@ import {ChakraProvider} from '@chakra-ui/react'
 import customTheme from '../customTheme'
 
 function MyApp({Component, pageProps}: AppProps) {
+    console.log(customTheme)
     return (
         <ChakraProvider theme={customTheme}>
             <Component {...pageProps} />

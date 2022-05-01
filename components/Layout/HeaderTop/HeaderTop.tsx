@@ -11,13 +11,12 @@ import {
     Divider,
     Button,
     Icon,
-    useDisclosure,
+    useDisclosure, Text,
 } from '@chakra-ui/react'
 import {ChevronDownIcon} from '@chakra-ui/icons'
 import {MdLogin} from 'react-icons/md'
-import ModalCity from '../../Modal/ModalCity'
+import ModalCity from '../../Modal/ModalCity/ModalCity'
 import {cities} from '../../../mock/cities'
-
 const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
 
     const [city, setCity] = useState<string>('Выберите город')
@@ -32,7 +31,7 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
 
     return (
         <>
-            <Container maxWidth="container.xl">
+            <Container maxWidth="container.xl" display={{base: 'none', md:'block'}}>
                 <Flex minWidth="max-content" alignItems="center" gap="2" height="40px">
                     <List display="flex">
                         <ListItem>
@@ -53,7 +52,7 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
                         <ListItem>
                             <Button leftIcon={<Icon as={MdLogin}/>} variant="link"
                                     sx={{fontSize: '14px', fontFamily: 'Nunito', color: 'gray.600', marginTop: '4px'}}>
-                                Войти / Регистрация
+                                <Text as='span' display={{base: 'none', lg: 'inline'}}>Войти / Регистрация</Text>
                             </Button>
                         </ListItem>
                         <ListItem sx={{marginLeft: '35px'}}>

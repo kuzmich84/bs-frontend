@@ -23,12 +23,16 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
 
     const {getItem, setItem} = useStorage()
     const initialCity = getItem('city', 'local') || 'Выберите город'
-    const [city, setCity] = useState<string>(initialCity)
+    const [city, setCity] = useState<string>('Выберите город')
     const {isOpen, onOpen, onClose} = useDisclosure()
 
+    useEffect(() => {
+        setCity(initialCity)
+    }, [])
 
     useEffect(() => {
         setItem('city', city, 'local')
+
     }, [city])
 
     const buttonClickHandler = (evt: React.MouseEvent) => {

@@ -41,7 +41,6 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
         setCity(innerText)
     }
 
-
     return (
         <>
             <Container maxWidth="container.xl" display={{base: 'none', md: 'block'}}>

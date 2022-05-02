@@ -33,7 +33,7 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
     useEffect(() => {
         setItem('city', city, 'local')
 
-    }, [city])
+    }, [city, setItem])
 
     const buttonClickHandler = (evt: React.MouseEvent) => {
         evt.preventDefault()

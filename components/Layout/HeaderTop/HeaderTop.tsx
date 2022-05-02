@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {IHeaderTopProps} from './IHeaderTop.props'
 import styles from './HeaderTop.module.scss'
 import {
@@ -17,10 +17,19 @@ import {ChevronDownIcon} from '@chakra-ui/icons'
 import {MdLogin} from 'react-icons/md'
 import ModalCity from '../../Modal/ModalCity/ModalCity'
 import {cities} from '../../../mock/cities'
+import useStorage from '../../../hooks/useLocalStorage'
+
 const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
 
-    const [city, setCity] = useState<string>('Выберите город')
+    const {getItem, setItem} = useStorage()
+    const initialCity = getItem('city', 'local') || 'Выберите город'
+    const [city, setCity] = useState<string>(initialCity)
     const {isOpen, onOpen, onClose} = useDisclosure()
+
+
+    useEffect(() => {
+        setItem('city', city, 'local')
+    }, [city])
 
     const buttonClickHandler = (evt: React.MouseEvent) => {
         evt.preventDefault()
@@ -31,7 +40,7 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
 
     return (
         <>
-            <Container maxWidth="container.xl" display={{base: 'none', md:'block'}}>
+            <Container maxWidth="container.xl" display={{base: 'none', md: 'block'}}>
                 <Flex minWidth="max-content" alignItems="center" gap="2" height="40px">
                     <List display="flex">
                         <ListItem>
@@ -52,7 +61,7 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
                         <ListItem>
                             <Button leftIcon={<Icon as={MdLogin}/>} variant="link"
                                     sx={{fontSize: '14px', fontFamily: 'Nunito', color: 'gray.600', marginTop: '4px'}}>
-                                <Text as='span' display={{base: 'none', lg: 'inline'}}>Войти / Регистрация</Text>
+                                <Text as="span" display={{base: 'none', lg: 'inline'}}>Войти / Регистрация</Text>
                             </Button>
                         </ListItem>
                         <ListItem sx={{marginLeft: '35px'}}>

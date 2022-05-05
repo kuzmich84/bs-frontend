@@ -27,7 +27,7 @@ const MainMenu = ({pages}: IMainMenuProps): JSX.Element => {
 
 
     return (
-        <Container maxWidth={{base: '960px', xl: 'container.xl'}} mb='30px'>
+        <Container maxWidth={{base: '960px', xl: 'container.xl'}}>
             <Flex minWidth="max-content" alignItems="center" gap="2" height={20}>
                 <Box p="2">
                     <Link href="/">

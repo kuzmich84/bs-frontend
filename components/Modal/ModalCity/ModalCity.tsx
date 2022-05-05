@@ -25,7 +25,7 @@ const ModalCity = ({isOpen, onClose, cities, onButtonClick}: IModuleCityProps): 
                     <ModalBody>
                         <List>
                             {cities.map((city) => (
-                                <ListItem key={city} onClick={onClose}>
+                                <ListItem key={city} onClick={onClose} m={2}>
                                     <Button onClick={onButtonClick} variant="link" sx={{
                                         fontSize: '14px',
                                         fontFamily: 'Nunito',

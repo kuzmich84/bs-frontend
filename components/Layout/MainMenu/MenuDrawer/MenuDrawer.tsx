@@ -13,6 +13,7 @@ import styles from './MenuDrawer.module.scss'
 import {IDrawer} from '../../../../interfaces/common'
 import NextLink from 'next/link'
 import {MdLogin, MdAppRegistration} from 'react-icons/md'
+import {AppRoute} from '../../../../interfaces/const'
 
 const MenuDrawer = ({isOpen, onClose, btnRef, pages}: IDrawer): JSX.Element => {
     return (
@@ -42,10 +43,10 @@ const MenuDrawer = ({isOpen, onClose, btnRef, pages}: IDrawer): JSX.Element => {
                             </Box>
 
                         ))}
-                        <ListItem padding="12px 20px" key="login" display="flex">
+                        <ListItem onClick={onClose} padding="12px 20px" key="login" display="flex">
                             <>
                                 <Icon as={MdLogin} boxSize={5} color="gray.500" mr={2}/>
-                                <NextLink href="/login">
+                                <NextLink href={AppRoute.Login}>
                                     <Link>Войти</Link>
                                 </NextLink>
                             </>
@@ -54,7 +55,7 @@ const MenuDrawer = ({isOpen, onClose, btnRef, pages}: IDrawer): JSX.Element => {
                         <ListItem onClick={onClose} padding="12px 20px" key="registration" display="flex">
                             <>
                                 <Icon as={MdAppRegistration} boxSize={5} color="gray.500" mr={2}/>
-                                <NextLink href="/registration">
+                                <NextLink href={AppRoute.Register}>
                                     <Link>Регистрация</Link>
                                 </NextLink>
                             </>

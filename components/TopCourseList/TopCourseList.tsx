@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 const TopCourseList = ({...props}: ITopCourseListProps): JSX.Element => {
     return (
-        <Container maxWidth="1320px">
+        <Container maxWidth="1320px" mt='30px'>
             <Heading as="h3" fontSize="26px" textAlign="center" mb="30px">Популярные Курсы</Heading>
             <Center>
                 <CategoryList categories={categories}/>

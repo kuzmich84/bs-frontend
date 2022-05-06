@@ -5,5 +5,4 @@ export interface IModuleCityProps {
     onClose: () => void,
     cities: string[],
     onButtonClick: (evt: React.MouseEvent) => void,
-
 }

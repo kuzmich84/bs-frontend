@@ -1,13 +1,8 @@
 import React from 'react'
 import {
-    Button,
-    Divider, Input, InputGroup, InputLeftElement, InputRightElement,
-    List, ListItem,
+    Input, InputGroup, InputRightElement,
     Modal,
-    ModalBody,
-    ModalCloseButton,
     ModalContent,
-    ModalHeader,
     ModalOverlay,
 } from '@chakra-ui/react'
 import {IModalSearch} from './IModalSearch'
@@ -19,8 +14,8 @@ const ModalSearch = ({isOpen, onClose}: IModalSearch): JSX.Element => {
             <ModalOverlay>
                 <ModalContent>
                     <InputGroup>
-                        <Input placeholder='Поиск' />
-                        <InputRightElement children={<SearchIcon />} />
+                        <Input placeholder="Поиск"/>
+                        <InputRightElement children={<SearchIcon/>}/>
                     </InputGroup>
                 </ModalContent>
             </ModalOverlay>

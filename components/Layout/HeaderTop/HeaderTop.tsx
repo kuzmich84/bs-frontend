@@ -18,6 +18,7 @@ import {MdLogin} from 'react-icons/md'
 import ModalCity from '../../Modal/ModalCity/ModalCity'
 import {cities} from '../../../mock/cities'
 import useStorage from '../../../hooks/useLocalStorage'
+import ModalLogin from '../../Modal/ModalLogin/ModalLogin'
 
 const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
 
@@ -62,10 +63,7 @@ const HeaderTop = ({...props}: IHeaderTopProps): JSX.Element => {
                     <Spacer/>
                     <List display="flex">
                         <ListItem>
-                            <Button leftIcon={<Icon as={MdLogin}/>} variant="link"
-                                    sx={{fontSize: '14px', fontFamily: 'Nunito', color: 'gray.600', marginTop: '4px'}}>
-                                <Text as="span" display={{base: 'none', lg: 'inline'}}>Войти / Регистрация</Text>
-                            </Button>
+                            <ModalLogin/>
                         </ListItem>
                         <ListItem sx={{marginLeft: '35px'}}>
                             <Button onClick={onOpen} rightIcon={<ChevronDownIcon/>} variant="link"

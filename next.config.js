@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['beauty-schools.ru']
+    domains: ['beauty-schools.ru', 'images.unsplash.com']
   },
   webpack(config, options) {
     config.module.rules.push({

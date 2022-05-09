@@ -27,7 +27,7 @@ type Inputs = {
     password: string,
 }
 
-const LoginForm = ({onCloseLoginForm,onChangeTab}: ILoginFormProps): JSX.Element => {
+const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Element => {
 
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const handleClickPassword = () => setShowPassword(!showPassword)
@@ -61,7 +61,8 @@ const LoginForm = ({onCloseLoginForm,onChangeTab}: ILoginFormProps): JSX.Element
             <Heading textAlign="center" as="h3" fontSize="25px" mb="5px">Вход в ваш аккаунт</Heading>
             <Text textAlign="center" color="#6f7074" fontSize="15px" mb="40px">Еще нет аккаунта?
                 <NextLink href={AppRoute.Register} passHref>
-                    <Link  onClick={() => onChangeTab ? onChangeTab(TabsNumber.Register) : null} ml={2} sx={{color: '#2441e7'}}>Регистрация!</Link>
+                    <Link onClick={() => onChangeTab ? onChangeTab(TabsNumber.Register) : null} ml={2}
+                          sx={{color: '#2441e7'}}>Регистрация!</Link>
                 </NextLink></Text>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <VStack spacing={4} align="stretch">
@@ -81,7 +82,7 @@ const LoginForm = ({onCloseLoginForm,onChangeTab}: ILoginFormProps): JSX.Element
                         <InputGroup>
                             <InputTheme
                                 isValid={touchedFields.password}
-                                type="password"
+                                type={showPassword ? 'text' : 'password'}
                                 id="password"
                                 placeholder="Пароль"
                                 {...register('password')}
@@ -103,7 +104,7 @@ const LoginForm = ({onCloseLoginForm,onChangeTab}: ILoginFormProps): JSX.Element
                     <ThemeButton color="#fff" bg="#192675" type="submit">Войти</ThemeButton>
                     <Flex align="center">
                         <Divider/>
-                        <Text padding={5} fontSize="15px" fontWeight="400" color="#6f7074">Или</Text>
+                        <Text padding={5} fontSize="15px" fontWeight="400" color="#6f7074">или</Text>
                         <Divider/>
                     </Flex>
                     <SimpleGrid columns={{sm: 1, md: 2}} spacingX="30px" spacingY="20px">

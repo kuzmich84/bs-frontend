@@ -14,6 +14,7 @@ const Card = ({...props}: ICardProps): JSX.Element => {
                 layout="responsive"
                 width="305px"
                 height="200px"
+                priority
                 className={styles.image}
             />
             <VStack spacing="15px" padding="20px" align="stretch">

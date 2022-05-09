@@ -34,7 +34,7 @@ const ThemeButton = ({children, color, bg, ...props}: IThemeButtonProps): JSX.El
             _focus={{
                 boxShadow:
                     `0 0 1px 2px ${hexRgb(bg, {format: 'css', alpha: 0.2})}, 0 1px 1px rgba(0, 0, 0, 0)`,
-                outline: `1px auto ${bg}`
+                outline: `2px auto ${bg}`
             }}
             {...props}
         >

@@ -8,7 +8,7 @@ import {BiCommentDetail} from 'react-icons/bi'
 
 const Card = ({...props}: ICardProps): JSX.Element => {
     return (
-        <Box boxShadow="md" _hover={{boxShadow: 'xl'}} rounded="md" cursor="pointer" overflow="hidden">
+        <Box boxShadow="md" _hover={{boxShadow: 'xl'}} rounded="md" cursor="pointer" overflow="hidden" display='flex' flexDirection='column' justifyContent='space-between' height='100%'>
             <Image
                 src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1187&q=80"
                 layout="responsive"
@@ -27,7 +27,8 @@ const Card = ({...props}: ICardProps): JSX.Element => {
                     <Text fontSize="15px" color="#7e7e7e">Школа красоты</Text>
                     <Heading as="h5" fontSize="18px" fontWeight="600" color="#0a0a0a">Макияж для начинающих</Heading>
                 </VStack>
-                <Flex alignItems="center" color="#555555" fontSize="14px" paddingTop='15px'>
+            </VStack>
+                <Flex alignItems="center" color="#555555" fontSize="14px" padding='20px' flex='1 1 auto'>
                     <HStack spacing={1} mr={3}>
                         <Icon width="1.1rem" height="1.1rem" as={BsPerson}/>
                         <Text>1538</Text>
@@ -37,7 +38,7 @@ const Card = ({...props}: ICardProps): JSX.Element => {
                         <Text>1538</Text>
                     </HStack>
                 </Flex>
-            </VStack>
+
         </Box>
     )
 }

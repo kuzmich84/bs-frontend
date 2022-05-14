@@ -1,6 +1,8 @@
 import {IRegisterFormProps} from './IRegisterForm.props'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {
+    Alert, AlertDescription,
+    AlertIcon, AlertTitle,
     Checkbox,
     Divider,
     Flex,
@@ -31,6 +33,26 @@ type Inputs = {
     confirmPassword: string,
 }
 
+type Error = {
+    message?: string
+}
+
+const createUser = async (username: string, email: string, password: string) => {
+    const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        body: JSON.stringify({username, email, password}),
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+        },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong!')
+    }
+}
+
 
 const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): JSX.Element => {
 
@@ -54,7 +76,6 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
         handleSubmit,
         register,
         reset,
-        watch,
         formState: {errors, touchedFields},
     } = useForm<Inputs>({
         mode: 'onBlur',
@@ -62,13 +83,28 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
 
     })
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
-        reset()
-    }
 
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
+    const [isLogin, setIsLogin] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
+
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        if (isLogin) {
+
+        } else {
+            try {
+                const result = await createUser(data.name, data.email, data.password)
+                reset()
+            } catch (e: Error | any) {
+                setError(e.message)
+                console.log(e.message)
+
+            }
+        }
+
+    }
+
 
     const handleClickPassword = () => setShowPassword(!showPassword)
     const handleClickConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
@@ -83,6 +119,13 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
                           sx={{color: '#2441e7'}}>Bойти!</Link>
                 </NextLink></Text>
             <form onSubmit={handleSubmit(onSubmit)}>
+                {error && (
+                    <Alert status="error" fontSize="14px" mb={4}>
+                        <AlertIcon/>
+                        <AlertTitle>Пользователь с таким email уже существует. Пожалуйста введите другой. </AlertTitle>
+                    </Alert>
+                )}
+
                 <VStack spacing={4} align="stretch">
                     <FormControl isInvalid={!!errors.name}>
                         <InputTheme
@@ -147,7 +190,7 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
                         <Checkbox iconColor="#fff"><Text as="span" fontSize="15px" color="#6f7074">Хотите
                             преподавать?</Text></Checkbox>
                     </Flex>
-                    <ThemeButton type='submit' color="#fff" bg="#192675" >Регистрация</ThemeButton>
+                    <ThemeButton type="submit" color="#fff" bg="#192675">Регистрация</ThemeButton>
                     <Flex align="center">
                         <Divider/>
                         <Text padding={5} fontSize="15px" fontWeight="400" color="#6f7074">или</Text>

@@ -6,7 +6,6 @@ import axios from 'axios'
 export default NextAuth({
     providers: [
         CredentialsProvider({
-
                 name: 'Credentials',
                 credentials: {
                     email: {type: 'text'},

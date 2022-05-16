@@ -79,7 +79,7 @@ const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Elemen
             if (onCloseLoginForm) {
                 onCloseLoginForm()
             }
-            await router.push('/profiles')
+            await router.push('/profile')
         }
     }
     return (

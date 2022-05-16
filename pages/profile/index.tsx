@@ -1,7 +1,7 @@
 import {getSession} from 'next-auth/react'
 import {GetServerSideProps} from 'next'
 
-const Profiles = (): JSX.Element => {
+const Profile = (): JSX.Element => {
 
     return (
         <div>Page Profiles</div>
@@ -23,4 +23,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {session},
     }
 }
-export default Profiles
+export default Profile

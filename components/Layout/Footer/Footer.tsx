@@ -43,7 +43,7 @@ const Footer = (): JSX.Element => {
                     <Stack align={'flex-start'}>
                         <Heading as='h4' fontSize='20px' textTransform='uppercase' mb='30px' fontWeight='400'>Продукты</Heading>
                         <Link href={'#'}>Курсы</Link>
-                        <Link href={'#'}>Мастер клыссы</Link>
+                        <Link href={'#'}>Мастер классы</Link>
                         <Link href={'#'}>События</Link>
                         <Link href={'#'}>Цены</Link>
                     </Stack>

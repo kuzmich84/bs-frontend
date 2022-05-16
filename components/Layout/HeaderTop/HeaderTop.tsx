@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import {IHeaderTopProps} from './IHeaderTop.props'
-import styles from './HeaderTop.module.scss'
 import {
     Flex,
     Container,
@@ -10,11 +9,9 @@ import {
     Spacer,
     Divider,
     Button,
-    Icon,
-    useDisclosure, Text,
+    useDisclosure,
 } from '@chakra-ui/react'
 import {ChevronDownIcon} from '@chakra-ui/icons'
-import {MdLogin} from 'react-icons/md'
 import ModalCity from '../../Modal/ModalCity/ModalCity'
 import {cities} from '../../../mock/cities'
 import useStorage from '../../../hooks/useLocalStorage'

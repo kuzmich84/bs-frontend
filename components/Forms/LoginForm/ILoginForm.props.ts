@@ -1,4 +1,4 @@
 export interface ILoginFormProps {
-    onCloseLoginForm: () => void,
-    onChangeTab: (index: number) => void,
+    onCloseLoginForm?: () => void,
+    onChangeTab?: (index: number) => void,
 }

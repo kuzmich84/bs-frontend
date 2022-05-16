@@ -1,12 +1,11 @@
-import type {NextPage} from 'next'
-
-import {Box, Center, Container, Heading, Link, Text} from '@chakra-ui/react'
+import {Box, Center, Container} from '@chakra-ui/react'
 import LoginForm from '../components/Forms/LoginForm/LoginForm'
-import NextLink from 'next/link'
 import React from 'react'
-import {AppRoute} from '../interfaces/const'
+import {GetServerSideProps} from 'next'
+import {getSession} from 'next-auth/react'
 
-const Login: NextPage = () => {
+
+const Login = (): JSX.Element => {
 
     return (
         <Box as="section" bg="#fafafa" padding="60px 0">
@@ -21,4 +20,19 @@ const Login: NextPage = () => {
     )
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getSession({req: context.req})
+    if (session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {session},
+    }
+}
 export default Login

@@ -1,7 +1,7 @@
 import {IRegisterFormProps} from './IRegisterForm.props'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import {
-    Alert, AlertDescription,
+    Alert,
     AlertIcon, AlertTitle,
     Checkbox,
     Divider,
@@ -24,6 +24,7 @@ import * as Yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {useState} from 'react'
 import IconViewPassword from '../../Icons/IconViewPassword'
+import {useRouter} from 'next/router'
 
 
 type Inputs = {
@@ -56,6 +57,8 @@ const createUser = async (username: string, email: string, password: string) => 
 
 const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): JSX.Element => {
 
+    const router = useRouter()
+
     const validationSchema = Yup.object().shape({
         name: Yup.string()
             .required('Обязательное поле к заполнению')
@@ -86,23 +89,17 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
 
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
-    const [isLogin, setIsLogin] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        if (isLogin) {
-
-        } else {
-            try {
-                const result = await createUser(data.name, data.email, data.password)
-                reset()
-            } catch (e: Error | any) {
-                setError(e.message)
-                console.log(e.message)
-
-            }
+        try {
+            await createUser(data.name, data.email, data.password)
+            reset()
+            onCloseRegisterForm && onCloseRegisterForm()
+            await router.push('/login')
+        } catch (e: Error | any) {
+            setError(e.message)
         }
-
     }
 
 
@@ -114,18 +111,17 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
         <>
             <Heading textAlign="center" as="h3" fontSize="25px" mb="5px">Регистрация</Heading>
             <Text textAlign="center" color="#6f7074" fontSize="15px" mb="40px">Уже есть аккаунт?
-                <NextLink href={AppRoute.Login} passHref>
+                <NextLink href={onChangeTab ? '' : AppRoute.Login} passHref>
                     <Link onClick={() => onChangeTab ? onChangeTab(TabsNumber.Login) : null} ml={2}
                           sx={{color: '#2441e7'}}>Bойти!</Link>
                 </NextLink></Text>
             <form onSubmit={handleSubmit(onSubmit)}>
-                {error && (
+                {error === 'Email is already taken' && (
                     <Alert status="error" fontSize="14px" mb={4}>
                         <AlertIcon/>
                         <AlertTitle>Пользователь с таким email уже существует. Пожалуйста введите другой. </AlertTitle>
                     </Alert>
                 )}
-
                 <VStack spacing={4} align="stretch">
                     <FormControl isInvalid={!!errors.name}>
                         <InputTheme

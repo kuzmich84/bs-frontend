@@ -21,13 +21,11 @@ export default async function handler(
             res.status(422).json({message: 'Неверный ввод поля формы'})
             return
         }
-        console.log()
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/local/register`, {
                 username: username,
                 email: email,
                 password: password,
-                role: 2
             })
             res.status(201).json({message: 'Пользователь создан'})
 

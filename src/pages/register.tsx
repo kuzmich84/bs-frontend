@@ -1,7 +1,9 @@
 import type {NextPage} from 'next'
 import {Box, Center, Container} from '@chakra-ui/react'
+import LoginForm from '../components/Forms/LoginForm/LoginForm'
 import React from 'react'
 import RegisterForm from '../components/Forms/RegisterForm/RegisterForm'
+import TestForm from '../components/Forms/testForm'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
 

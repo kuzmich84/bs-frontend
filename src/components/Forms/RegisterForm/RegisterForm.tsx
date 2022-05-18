@@ -25,6 +25,7 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import {useState} from 'react'
 import IconViewPassword from '../../Icons/IconViewPassword'
 import {useRouter} from 'next/router'
+import {createUser} from '../../../lib/auth-fetch'
 
 
 type Inputs = {
@@ -37,23 +38,6 @@ type Inputs = {
 type Error = {
     message?: string
 }
-
-const createUser = async (username: string, email: string, password: string) => {
-    const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        body: JSON.stringify({username, email, password}),
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-        },
-    })
-
-    const data = await response.json()
-
-    if (!response.ok) {
-        throw new Error(data.message || 'Something went wrong!')
-    }
-}
-
 
 const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): JSX.Element => {
 

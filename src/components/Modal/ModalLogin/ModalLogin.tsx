@@ -17,7 +17,7 @@ import {TabsNumber} from '../../../interfaces/const'
 const ModalLogin = ({...props}: IModalLoginProps): JSX.Element => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [tabIndex, setTabIndex] = useState(TabsNumber.Login)
-    const {status} = useSession()
+    const {status, data:session} = useSession()
     return (
         <>
             <Button onClick={status === 'authenticated' ? () => signOut({callbackUrl: '/'}) : onOpen}

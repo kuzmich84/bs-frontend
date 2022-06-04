@@ -1,13 +1,11 @@
 import React from 'react'
 import {ITopCourseListProps} from './ITopCourseList.props'
-import styles from './TopCourseList.module.scss'
-import {Box, Center, Container, Heading, List, SimpleGrid, VStack} from '@chakra-ui/react'
+import {Center, Container, Heading, SimpleGrid} from '@chakra-ui/react'
 import CategoryList from '../CategoryList/CategoryList'
 import {categories} from '../../mock/categories'
-import Image from 'next/image'
+
 import Card from '../Card/Card'
-import ProductSimple from '../Card/ProductSimple'
-import ProductAddToCart from '../Card/ProductSimple'
+
 
 const TopCourseList = ({...props}: ITopCourseListProps): JSX.Element => {
     return (

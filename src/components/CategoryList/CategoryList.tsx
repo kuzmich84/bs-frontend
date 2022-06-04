@@ -1,6 +1,5 @@
 import React from 'react'
 import {ICategoryListProps} from './ICategoryList.props'
-import styles from './CategoryList.module.scss'
 import {Button, List, ListItem} from '@chakra-ui/react'
 
 const CategoryList = ({categories}: ICategoryListProps): JSX.Element => {

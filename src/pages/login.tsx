@@ -3,6 +3,7 @@ import LoginForm from '../components/Forms/LoginForm/LoginForm'
 import React from 'react'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
+import {AppRoute} from '../interfaces/const'
 
 
 const Login = (): JSX.Element => {
@@ -25,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (session) {
         return {
             redirect: {
-                destination: '/',
+                destination: AppRoute.Root,
                 permanent: false,
             },
         }

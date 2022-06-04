@@ -6,6 +6,7 @@ import RegisterForm from '../components/Forms/RegisterForm/RegisterForm'
 import TestForm from '../components/Forms/testForm'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
+import {AppRoute} from '../interfaces/const'
 
 const Register: NextPage = () => {
     return (
@@ -25,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (session) {
         return {
             redirect: {
-                destination: '/',
+                destination: AppRoute.Root,
                 permanent: false,
             },
         }

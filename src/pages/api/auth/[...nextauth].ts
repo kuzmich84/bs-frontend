@@ -1,8 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import axios from 'axios'
-import * as jwt from 'jsonwebtoken'
-
 
 export default NextAuth({
     providers: [

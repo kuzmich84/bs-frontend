@@ -3,7 +3,7 @@ import {IModalLoginProps} from './IModalLogin.props'
 import {signOut, useSession} from 'next-auth/react'
 import {
     Button,
-    Icon,
+    Icon, Menu, MenuButton, MenuDivider, MenuItem, MenuList,
     Modal, ModalBody, ModalCloseButton,
     ModalContent, ModalHeader,
     ModalOverlay, Tab, TabList, TabPanel, TabPanels, Tabs,
@@ -12,22 +12,64 @@ import {
 import LoginForm from '../../Forms/LoginForm/LoginForm'
 import {MdLogin, MdLogout} from 'react-icons/md'
 import RegisterForm from '../../Forms/RegisterForm/RegisterForm'
-import {TabsNumber} from '../../../interfaces/const'
+import {AppRoute, TabsNumber} from '../../../interfaces/const'
+import {ChevronDownIcon} from '@chakra-ui/icons'
+import {useRouter} from 'next/router'
 
 const ModalLogin = ({...props}: IModalLoginProps): JSX.Element => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const [tabIndex, setTabIndex] = useState(TabsNumber.Login)
-    const {status, data:session} = useSession()
-    return (
-        <>
-            <Button onClick={status === 'authenticated' ? () => signOut({callbackUrl: '/'}) : onOpen}
-                    leftIcon={<Icon as={status === 'authenticated' ? MdLogout : MdLogin}/>} variant="link"
-                    sx={{fontSize: '14px', fontFamily: 'Nunito', color: 'gray.600', marginTop: '4px'}}>
+    const {status, data: session} = useSession()
+    const router = useRouter()
+
+    const loginButton = (status: string) => {
+        if (status === 'authenticated') {
+            return (
+                <Menu>
+                    <MenuButton
+                        transition="all 0.2s"
+                        _hover={{textDecoration: 'underline'}}
+                    >
+                        <Text as="span" fontSize="14px" color="gray.600" marginTop={4}>{session?.user?.name}</Text>
+                        <ChevronDownIcon/>
+                    </MenuButton>
+                    <MenuList
+                        color="gray.600"
+                        fontSize={14}
+                        fontFamily="Nunito"
+                    >
+                        <MenuItem onClick={() => router.push(AppRoute.Profile)}>
+                            Личный кабинет
+                        </MenuItem>
+
+                        <MenuDivider/>
+                        <MenuItem onClick={() => signOut({callbackUrl: AppRoute.Root})}>
+
+                            Выйти
+
+                        </MenuItem>
+
+                    </MenuList>
+                </Menu>
+            )
+        }
+        return (
+            <Button
+                onClick={onOpen}
+                variant="link"
+                leftIcon={<Icon as={MdLogout}/>}
+                sx={{fontSize: '14px', fontFamily: 'Nunito', color: 'gray.600', marginTop: '4px'}}>
                 <Text as="span" display={{
                     base: 'none',
                     lg: 'inline',
-                }}>{status === 'authenticated' ?` ${session?.user?.name}` : 'Войти / Регистрация '}</Text>
+                }}>{'Войти / Регистрация '}</Text>
             </Button>
+        )
+
+    }
+    return (
+        <>
+            {loginButton(status)}
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay/>
                 <ModalContent>

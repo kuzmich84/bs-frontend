@@ -2,11 +2,9 @@ import React, {useRef, useState} from 'react'
 import {IMainMenuProps} from './IMainMenu.props'
 import styles from './MainMenu.module.scss'
 import NextLink from 'next/link'
-import {MdMenu, MdSearch} from 'react-icons/md'
+import {MdSearch} from 'react-icons/md'
 import {
     Box,
-    Button,
-    ButtonGroup,
     Container,
     Flex,
     Heading,
@@ -14,11 +12,10 @@ import {
     Link,
     List,
     ListItem,
-    Spacer, useBreakpointValue, useDisclosure,
+    useBreakpointValue, useDisclosure,
 } from '@chakra-ui/react'
 
 import ModalSearch from '../../Modal/ModalSearch/ModalSearch'
-import MenuDrawer from './MenuDrawer/MenuDrawer'
 import MenuGamburger from './MenuGamburger/MenuGamburger'
 
 const MainMenu = ({pages}: IMainMenuProps): JSX.Element => {

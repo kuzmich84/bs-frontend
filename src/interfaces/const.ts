@@ -5,6 +5,11 @@ export enum AppRoute {
     Profile = '/profile'
 }
 
+export enum TextRoute {
+    root = 'Главная',
+    profile = 'Личный Кабинет'
+}
+
 export enum TabsNumber {
     Login = 0,
     Register = 1

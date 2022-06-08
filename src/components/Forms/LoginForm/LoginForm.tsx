@@ -10,7 +10,7 @@ import {
     Link,
     VStack,
     Text,
-    SimpleGrid, Heading, InputGroup, InputRightElement, Alert, AlertIcon, AlertTitle,
+    SimpleGrid, Heading, InputGroup, InputRightElement, Alert, AlertIcon, AlertTitle, BeatLoader,
 } from '@chakra-ui/react'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import ThemeButton from '../../UI/ThemeButton/ThemeButton'
@@ -61,21 +61,25 @@ const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Elemen
 
     const router = useRouter()
     const [error, setError] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        setIsLoading(true)
 
         const result: Result = await signIn('credentials', {
             redirect: false,
             email: data.email,
             password: data.password,
-            callbackUrl: '/profiles',
+            callbackUrl: AppRoute.Profile,
         }) || {error: null}
 
         if (result.error) {
             setError(true)
+            setIsLoading(false)
         } else {
             setError(false)
             reset()
+            setIsLoading(false)
             if (onCloseLoginForm) {
                 onCloseLoginForm()
             }
@@ -133,7 +137,7 @@ const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Elemen
                             <Link marginLeft="auto" sx={{color: '#c75533', fontSize: '15px'}}>Забыли пароль?</Link>
                         </NextLink>
                     </Flex>
-                    <ThemeButton color="#fff" bg="#192675" type="submit">Войти</ThemeButton>
+                    <ThemeButton isLoading={isLoading} color="#fff" bg="#192675" type="submit">Войти</ThemeButton>
                     <Flex align="center">
                         <Divider/>
                         <Text padding={5} fontSize="15px" fontWeight="400" color="#6f7074">или</Text>

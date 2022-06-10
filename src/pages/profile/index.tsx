@@ -9,9 +9,8 @@ import {
     GridItem,
     Heading,
     Spacer,
-    Button,
     Avatar,
-    VisuallyHidden, VStack, FormLabel, Icon,
+    VisuallyHidden, VStack, FormLabel, Icon, FormControl, FormErrorMessage,
 } from '@chakra-ui/react'
 import {AppRoute} from '../../interfaces/const'
 import {fetchAPI} from '../../lib/api'
@@ -20,26 +19,62 @@ import {IUser} from '../../interfaces/pages.interface'
 import styles from './form.module.scss'
 import {MdAddAPhoto} from 'react-icons/md'
 import {useForm} from 'react-hook-form'
-import {useState} from 'react'
+import React, {useState} from 'react'
+import ThemeButton from '../../components/UI/ThemeButton/ThemeButton'
+import * as Yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
+import {createAvatar} from '../../lib/photo-fetch'
+
+type Inputs = {
+    avatar: string,
+}
 
 
 const Profile = ({user}: IUser): JSX.Element => {
-    const {register, handleSubmit} = useForm()
+
+    const validationSchema = Yup.object().shape({
+        avatar: Yup.mixed().test('required', 'Выберите файл', value => {
+            return value && value.length
+        }),
+
+    })
+    const {register, handleSubmit, watch, formState: errors} = useForm<Inputs>({
+        resolver: yupResolver(validationSchema),
+    })
     const [image, setImage] = useState()
-    console.log(image)
 
-    const uploadToClient = (evt)=> {
-        if(evt.target.files && evt.target.files[0]) {
-            const tmpImage = evt.target.files[0].name;
-            setImage(tmpImage)
+    const convert2base64 = (data) => {
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+            setImage(reader.result.toString())
+        }
+
+        reader.readAsDataURL(data)
+    }
 
 
+    const uploadToClient = (evt) => {
+        if (evt.target.files && evt.target.files[0]) {
+            const tmpImage = evt.target.files[0]
+            convert2base64(tmpImage)
         }
     }
 
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            if (data.avatar.length > 0) {
+                await createAvatar(data.avatar[0])
+
+            } else {
+                return
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     return (
@@ -92,7 +127,7 @@ const Profile = ({user}: IUser): JSX.Element => {
                                     <form
                                         className={styles.form}
                                         encType="multipart/form-data"
-                                        name="upload-avatarnpm "
+                                        name="upload-avatar "
                                         onSubmit={handleSubmit(onSubmit)}
                                     >
                                         <FormLabel
@@ -107,17 +142,25 @@ const Profile = ({user}: IUser): JSX.Element => {
                                             alignItems="center"
                                             _hover={{cursor: 'pointer'}}
                                             top="-20px"
-                                            left="-25px"
+                                            left="30px"
                                         >
                                             <VisuallyHidden>
                                                 <input
-                                                    {...register("avatar-upload")}
+                                                    {...register('avatar')}
                                                     type="file"
                                                     onChange={uploadToClient}
+
                                                 />
                                             </VisuallyHidden>
                                             <Icon fontSize={25} color="white" as={MdAddAPhoto}/>
                                         </FormLabel>
+                                        <FormErrorMessage>
+                                            {errors.avatar && errors.avatar.message}
+                                        </FormErrorMessage>
+
+                                        <ThemeButton type="submit" color="#ffffff" bg="#2441e7"
+                                                     mt={50}>Сохранить</ThemeButton>
+
                                     </form>
                                 </VStack>
 

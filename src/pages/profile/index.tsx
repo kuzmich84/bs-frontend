@@ -1,4 +1,4 @@
-import {getSession} from 'next-auth/react'
+import {getSession, useSession} from 'next-auth/react'
 import {GetServerSideProps} from 'next'
 
 import {
@@ -19,7 +19,7 @@ import {IUser} from '../../interfaces/pages.interface'
 import styles from './form.module.scss'
 import {MdAddAPhoto} from 'react-icons/md'
 import {useForm} from 'react-hook-form'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ThemeButton from '../../components/UI/ThemeButton/ThemeButton'
 import * as Yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -32,6 +32,16 @@ type Inputs = {
 
 const Profile = ({user}: IUser): JSX.Element => {
 
+    const {data: session} = useSession()
+    const [image, setImage] = useState(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isDisabled, setIsDisabled] = useState<boolean>(true)
+    const [avatar, setAvatar] = useState<string>('')
+
+    useEffect(() => {
+        setAvatar(user.avatar)
+    }, [user.avatar])
+
     const validationSchema = Yup.object().shape({
         avatar: Yup.mixed().test('required', 'Выберите файл', value => {
             return value && value.length
@@ -41,21 +51,20 @@ const Profile = ({user}: IUser): JSX.Element => {
     const {register, handleSubmit, watch, formState: errors} = useForm<Inputs>({
         resolver: yupResolver(validationSchema),
     })
-    const [image, setImage] = useState()
+
 
     const convert2base64 = (data) => {
         const reader = new FileReader()
-
         reader.onloadend = () => {
             setImage(reader.result.toString())
         }
-
         reader.readAsDataURL(data)
     }
 
 
     const uploadToClient = (evt) => {
         if (evt.target.files && evt.target.files[0]) {
+            setIsDisabled(false)
             const tmpImage = evt.target.files[0]
             convert2base64(tmpImage)
         }
@@ -65,7 +74,10 @@ const Profile = ({user}: IUser): JSX.Element => {
     const onSubmit = async (data) => {
         try {
             if (data.avatar.length > 0) {
-                await createAvatar(data.avatar[0])
+                setIsLoading(true)
+                await createAvatar(data.avatar[0], session, avatar)
+                setIsLoading(false)
+                setIsDisabled(true)
 
             } else {
                 return
@@ -122,7 +134,7 @@ const Profile = ({user}: IUser): JSX.Element => {
                                     <Avatar
                                         size="2xl"
                                         name={user.username}
-                                        src={user.avatar || image}
+                                        src={image !== null ? image : avatar}
                                     />
                                     <form
                                         className={styles.form}
@@ -158,17 +170,20 @@ const Profile = ({user}: IUser): JSX.Element => {
                                             {errors.avatar && errors.avatar.message}
                                         </FormErrorMessage>
 
-                                        <ThemeButton type="submit" color="#ffffff" bg="#2441e7"
-                                                     mt={50}>Сохранить</ThemeButton>
+                                        <ThemeButton
+                                            height="45px"
+                                            isLoading={isLoading}
+                                            isDisabled={isDisabled}
+                                            type="submit"
+                                            color="#ffffff"
+                                            bg="#2441e7"
+                                            mt={50}
+                                        >Сохранить</ThemeButton>
 
                                     </form>
                                 </VStack>
-
                             </Flex>
-
-
                         </Box>
-
                     </GridItem>
                 </Grid>
             </Container>

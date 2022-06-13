@@ -1,7 +1,6 @@
-import {fetchAPI} from './api'
 import axios from 'axios'
 
-export const createAvatar = async (image: any, session: any, urlAvatar: string) => {
+export const createAvatar = async (image: any, session: any) => {
     const formData = new FormData()
     formData.append('userid', session.id)
     formData.append('picture', image)
@@ -34,8 +33,8 @@ export const createAvatar = async (image: any, session: any, urlAvatar: string) 
     )
 
 
-    if (urlAvatar) {
-        const urlAvatarPathname = new URL(urlAvatar).pathname
+    if (data.avatar) {
+        const urlAvatarPathname = new URL(data.avatar).pathname
         await axios.delete(`/api/delete-avatar?url=${urlAvatarPathname}`)
     }
 

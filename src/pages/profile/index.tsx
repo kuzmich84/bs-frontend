@@ -10,7 +10,7 @@ import {
     Heading,
     Spacer,
     Avatar,
-    VisuallyHidden, VStack, FormLabel, Icon, FormControl, FormErrorMessage,
+    VisuallyHidden, VStack, FormLabel, Icon, FormErrorMessage,
 } from '@chakra-ui/react'
 import {AppRoute} from '../../interfaces/const'
 import {fetchAPI} from '../../lib/api'
@@ -75,7 +75,8 @@ const Profile = ({user}: IUser): JSX.Element => {
         try {
             if (data.avatar.length > 0) {
                 setIsLoading(true)
-                await createAvatar(data.avatar[0], session, avatar)
+                const {avatar: avatarUrl} = await createAvatar(data.avatar[0], session)
+                setAvatar(avatarUrl)
                 setIsLoading(false)
                 setIsDisabled(true)
 

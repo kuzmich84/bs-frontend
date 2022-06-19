@@ -2,7 +2,10 @@ export enum AppRoute {
     Root = '/',
     Login = '/login',
     Register = '/register',
-    Profile = '/profile'
+    Profile = '/profile',
+    ResetPassword = '/reset-password',
+    ForgetPassword = '/forget-password'
+
 }
 
 export enum TextRoute {

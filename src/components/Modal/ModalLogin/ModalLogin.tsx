@@ -10,7 +10,7 @@ import {
     Text, useDisclosure,
 } from '@chakra-ui/react'
 import LoginForm from '../../Forms/LoginForm/LoginForm'
-import {MdLogin, MdLogout} from 'react-icons/md'
+import {MdLogout} from 'react-icons/md'
 import RegisterForm from '../../Forms/RegisterForm/RegisterForm'
 import {AppRoute, TabsNumber} from '../../../interfaces/const'
 import {ChevronDownIcon} from '@chakra-ui/icons'
@@ -30,7 +30,7 @@ const ModalLogin = ({...props}: IModalLoginProps): JSX.Element => {
                         transition="all 0.2s"
                         _hover={{textDecoration: 'underline'}}
                     >
-                        <Text as="span" fontSize="14px" color="gray.600" marginTop={4}>{session?.user?.name}</Text>
+                        <Text as="span" fontSize="14px" color="gray.600" marginTop={4}>{session?.user?.email}</Text>
                         <ChevronDownIcon/>
                     </MenuButton>
                     <MenuList

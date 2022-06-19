@@ -74,13 +74,13 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
+    const [isSendRegisterForm, setIsSendRegisterForm] = useState<boolean>(false)
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
             await createUser(data.name, data.email, data.password)
             reset()
-            onCloseRegisterForm && onCloseRegisterForm()
-            await router.push('/login')
+            setIsSendRegisterForm(true)
         } catch (e: Error | any) {
             setError(e.message)
         }
@@ -89,6 +89,15 @@ const RegisterForm = ({onCloseRegisterForm, onChangeTab}: IRegisterFormProps): J
 
     const handleClickPassword = () => setShowPassword(!showPassword)
     const handleClickConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
+
+    if (isSendRegisterForm) {
+        return (
+            <Alert status="success">
+                <AlertIcon/>
+                На ваш email отправлена ссылка для подтверждения. Проверьте свою почту.
+            </Alert>
+        )
+    }
 
 
     return (

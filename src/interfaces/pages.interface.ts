@@ -1,8 +1,5 @@
-export interface IUser {
-    user: {
-        id: number,
-        username: string,
-        avatar: string,
-        role: string
-    }
+import {IUser} from '../components/Forms/AvatarForm/IAvatarForm.props'
+
+export interface IProfilePage {
+    user: IUser
 }

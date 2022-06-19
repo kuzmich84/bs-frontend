@@ -8,10 +8,6 @@ export const pages = [
         url: '/courses',
     },
     {
-        name: 'События',
-        url: '/events',
-    },
-    {
         name: 'Блог',
         url: '/blog',
     },

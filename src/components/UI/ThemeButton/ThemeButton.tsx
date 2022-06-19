@@ -1,6 +1,6 @@
 import React from 'react'
 import {IThemeButtonProps} from './IThemeButton.props'
-import {Box, Button} from '@chakra-ui/react'
+import {Button} from '@chakra-ui/react'
 import hexRgb from 'hex-rgb'
 
 const ThemeButton = ({children, color, bg, ...props}: IThemeButtonProps): JSX.Element => {

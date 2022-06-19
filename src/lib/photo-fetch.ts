@@ -18,7 +18,7 @@ export const createAvatar = async (image: any, session: any) => {
     }
 
     const {data} = await axios.post(
-        'http://localhost:1338/api/user/updateLoggedInUser',
+        `${process.env.NEXT_PUBLIC_API_URL}/user/updateLoggedInUser`,
         {
             data: {
                 avatar: avatarUrl.url,

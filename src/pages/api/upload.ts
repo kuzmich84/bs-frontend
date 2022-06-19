@@ -31,7 +31,7 @@ const upload = multer({
 const handler = nc<NextApiRequest, NextApiResponse>()
     .use(upload.single('picture'))
     .post((req, res) => {
-        return res.json({hello: 'file upload', url: req.file.location})
+        return res.status(200).json({hello: 'file upload', url: req.file.location})
     })
     .patch(async (req, res) => {
         throw new Error('Throws me around! Error can be caught and handled.')

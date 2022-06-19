@@ -1,0 +1,22 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+
+}
+
+.formItem {
+  width: 45%;
+  flex-grow: 1;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  color: #0a0a0a;
+}
+
+.form div:last-child(2n) {
+  margin-right: 0;
+}
+
+.formItemTextArea {
+  width: 100%;
+}

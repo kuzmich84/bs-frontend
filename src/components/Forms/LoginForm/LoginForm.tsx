@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useState} from 'react'
 import {ILoginFormProps} from './ILoginForm.props'
 import {signIn} from 'next-auth/react'
 import {
@@ -10,7 +10,7 @@ import {
     Link,
     VStack,
     Text,
-    SimpleGrid, Heading, InputGroup, InputRightElement, Alert, AlertIcon, AlertTitle, BeatLoader,
+    SimpleGrid, Heading, InputGroup, InputRightElement, Alert, AlertIcon, AlertTitle,
 } from '@chakra-ui/react'
 import {SubmitHandler, useForm} from 'react-hook-form'
 import ThemeButton from '../../UI/ThemeButton/ThemeButton'
@@ -25,6 +25,7 @@ import IconViewPassword from '../../Icons/IconViewPassword'
 import {useRouter} from 'next/router'
 
 
+
 type Inputs = {
     email: string,
     password: string,
@@ -34,20 +35,19 @@ type Result = {
     error: string | null
 }
 
+const validationSchema = Yup.object().shape({
+    email: Yup.string()
+        .required('Обязательное поле к заполнению')
+        .email('Введите верный email адрес'),
+    password: Yup.string()
+        .required('Обязательное поле к заполнению')
+        .min(6, 'Пароль должен содержать не менее 6 символов'),
+})
+
 const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Element => {
 
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const handleClickPassword = () => setShowPassword(!showPassword)
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .required('Обязательное поле к заполнению')
-            .email('Введите верный email адрес'),
-        password: Yup.string()
-            .required('Обязательное поле к заполнению')
-            .min(6, 'Пароль должен содержать не менее 6 символов'),
-    })
-
 
     const {
         handleSubmit,
@@ -58,6 +58,7 @@ const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Elemen
         mode: 'onBlur',
         resolver: yupResolver(validationSchema),
     })
+
 
     const router = useRouter()
     const [error, setError] = useState<boolean>(false)
@@ -133,8 +134,8 @@ const LoginForm = ({onCloseLoginForm, onChangeTab}: ILoginFormProps): JSX.Elemen
                     </FormControl>
                     <Flex>
                         <Checkbox iconColor="#fff"><Text as="span" fontSize="15px">Запомнить меня</Text></Checkbox>
-                        <NextLink href={AppRoute.Register} passHref>
-                            <Link marginLeft="auto" sx={{color: '#c75533', fontSize: '15px'}}>Забыли пароль?</Link>
+                        <NextLink href={AppRoute.ForgetPassword} passHref >
+                            <Link onClick={onCloseLoginForm} marginLeft="auto" sx={{color: '#c75533', fontSize: '15px'}}>Забыли пароль?</Link>
                         </NextLink>
                     </Flex>
                     <ThemeButton isLoading={isLoading} color="#fff" bg="#192675" type="submit">Войти</ThemeButton>

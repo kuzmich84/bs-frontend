@@ -1,5 +1,5 @@
 import ResetPasswordForm from '../components/Forms/ResetPasswordForm/ResetPasswordForm'
-import {Box, Container, Flex, Heading, Text, VStack} from '@chakra-ui/react'
+import {Box, Container, Flex} from '@chakra-ui/react'
 import {useRouter} from 'next/router'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
@@ -7,7 +7,7 @@ import {AppRoute} from '../interfaces/const'
 
 const ResetPassword = (): JSX.Element => {
     const router = useRouter()
-    const {code} = router.query
+    const {code} = router.query !== undefined ?  router.query : ''
 
     return (
         <Box as="section" bg={'gray.50'}>

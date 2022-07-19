@@ -1,4 +1,4 @@
-import {getSession, useSession} from 'next-auth/react'
+import {getSession, signOut, useSession} from 'next-auth/react'
 import {GetServerSideProps} from 'next'
 
 import {
@@ -8,7 +8,7 @@ import {
     Grid,
     GridItem,
     Heading, Link, List, ListIcon, ListItem,
-    Spacer,
+    Spacer, Stack,
 } from '@chakra-ui/react'
 import {AppRoute} from '../../interfaces/const'
 import {fetchAPI} from '../../lib/api'
@@ -17,7 +17,7 @@ import {IProfilePage} from '../../interfaces/pages.interface'
 import React from 'react'
 import AvatarForm from '../../components/Forms/AvatarForm/AvatarForm'
 import ProfileForm from '../../components/Forms/ProfileForm/ProfileForm'
-import {FiSettings} from 'react-icons/fi'
+import {FiSettings, FiLogOut} from 'react-icons/fi'
 import NextLink from 'next/link'
 
 
@@ -32,14 +32,20 @@ const Profile = ({user}: IProfilePage): JSX.Element => {
                     templateColumns="20% 80%"
                 >
                     <GridItem>
-                        <Heading as="h4" fontSize={18} color="0a0a0a" mb={2}>Аккаунт</Heading>
+                        <Heading as="h4" fontSize={18} color="0a0a0a" mb={5}>Аккаунт</Heading>
                         <List width="100%" color="#7f7f7f" fontSize={16}>
-                            <ListItem _hover={{color: '#2441E7', textDecoration: 'none'}}>
-                                <ListIcon fontSize={23} as={FiSettings} color="#7f7f7f"/>
-                                <NextLink href={AppRoute.Profile}>
-                                    <Link>Личные данные</Link>
-                                </NextLink>
-                            </ListItem>
+                            <Stack gap={4}>
+                                <ListItem _hover={{color: '#2441E7'}}>
+                                    <ListIcon fontSize={23} as={FiSettings} color="#7f7f7f"/>
+                                    <NextLink href={AppRoute.Profile}>
+                                        <Link>Личные данные</Link>
+                                    </NextLink>
+                                </ListItem>
+                                <ListItem _hover={{color: '#2441E7'}}>
+                                    <ListIcon fontSize={23} as={FiLogOut} color="#7f7f7f"/>
+                                    <Link onClick={() => signOut({callbackUrl: AppRoute.Root})}>Выйти</Link>
+                                </ListItem>
+                            </Stack>
                         </List>
                     </GridItem>
                     <GridItem>

@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import {IResetPasswordFormProps} from './IResetPasswordForm.props'
+import {IDataPassword, IResetPasswordFormProps} from './IResetPasswordForm.props'
 import styles from './ResetPasswordForm.module.scss'
 import * as yup from 'yup'
 import * as Yup from 'yup'
-import {useForm} from 'react-hook-form'
+import {FieldValues, SubmitHandler, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
 import {
     FormControl,
@@ -35,7 +35,7 @@ const ResetPasswordForm = ({privateCode}: IResetPasswordFormProps): JSX.Element 
 
     })
 
-    const {register, handleSubmit, reset, formState: {errors, touchedFields}} = useForm({
+    const {register, handleSubmit, reset, formState: {errors, touchedFields}} = useForm<IDataPassword>({
         mode: 'onBlur',
         resolver: yupResolver(schema),
     })
@@ -44,13 +44,22 @@ const ResetPasswordForm = ({privateCode}: IResetPasswordFormProps): JSX.Element 
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
     const [isSuccessAlert, setIsSuccessAlert] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
 
 
-    const onSubmit = async (data) => {
-        await resetPass(data.password, privateCode)
-        setIsSuccessAlert(true)
-
+    const onSubmit: SubmitHandler<IDataPassword> = async (data) => {
+        try {
+            if (!privateCode) {
+                return
+            }
+            await resetPass(data.password, privateCode)
+            setIsSuccessAlert(true)
+            reset()
+        } catch (e: Error | any) {
+            setError('Что-то пошло не так. Просьба ввести пароли заново')
+        }
     }
+
 
     const handleClickPassword = () => setShowPassword(!showPassword)
     const handleClickConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword)
@@ -67,7 +76,7 @@ const ResetPasswordForm = ({privateCode}: IResetPasswordFormProps): JSX.Element 
                 p={6}
             >
                 <Heading lineHeight={1.1} fontSize={{base: '2xl', md: '3xl'}}>
-                   Восстановление пароля
+                    Восстановление пароля
                 </Heading>
                 <Text
                     fontSize={{base: 'sm', sm: 'md'}}
@@ -120,6 +129,10 @@ const ResetPasswordForm = ({privateCode}: IResetPasswordFormProps): JSX.Element 
                     <NextLink href={AppRoute.Login} passHref>
                         <Link>Перейдите на страницу входа</Link>
                     </NextLink>
+                </Alert>}
+                {error && <Alert status="error">
+                    <AlertIcon/>
+                    {error}
                 </Alert>}
             </Stack>
         </>

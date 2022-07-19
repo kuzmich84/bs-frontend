@@ -9,7 +9,7 @@ import {AppRoute} from '../interfaces/const'
 const Login = (): JSX.Element => {
 
     return (
-        <Box as="section" bg="#fafafa" padding="60px 0">
+        <Box as="section" bg="#fafafa" padding="60px 0" minHeight={'80vh'}>
             <Container maxWidth={{md: '720px', lg: '1024px', xl: '1320px'}}>
                 <Center>
                     <Box width="470px">

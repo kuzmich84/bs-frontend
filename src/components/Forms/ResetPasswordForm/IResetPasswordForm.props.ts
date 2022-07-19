@@ -1,3 +1,9 @@
 export interface IResetPasswordFormProps {
-    privateCode?: string
+    privateCode?: string,
+}
+
+export interface IDataPassword {
+    password: string,
+    confirmPassword: string,
+
 }

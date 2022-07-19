@@ -2,22 +2,20 @@ import React, {useEffect, useState} from 'react'
 import {IAvatarFormProps, IData} from './IAvatarForm.props'
 import styles from './AvatarForm.module.scss'
 import {
-    Avatar,
-    Flex,
     FormErrorMessage,
     FormLabel,
     Icon,
     VisuallyHidden,
     VStack,
-    Tooltip,
-    FormControl,
+    Image
 } from '@chakra-ui/react'
-import {MdAddAPhoto} from 'react-icons/md'
+import {FaFileUpload} from 'react-icons/fa'
 import ThemeButton from '../../UI/ThemeButton/ThemeButton'
 import {createAvatar} from '../../../lib/photo-fetch'
 import * as Yup from 'yup'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
+import {useRouter} from "next/router";
 
 
 type Inputs = {
@@ -29,6 +27,8 @@ const AvatarForm = ({user, session}: IAvatarFormProps): JSX.Element => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isDisabled, setIsDisabled] = useState<boolean>(true)
     const [avatar, setAvatar] = useState<string>('')
+
+    const router = useRouter()
 
     useEffect(() => {
         setAvatar(user.avatar)
@@ -73,6 +73,7 @@ const AvatarForm = ({user, session}: IAvatarFormProps): JSX.Element => {
                 setAvatar(avatarUrl)
                 setIsLoading(false)
                 setIsDisabled(true)
+                router.reload()
 
             } else {
                 return
@@ -91,10 +92,11 @@ const AvatarForm = ({user, session}: IAvatarFormProps): JSX.Element => {
                 pt={5}
 
             >
-                <Avatar
-                    size="2xl"
-                    name={user.username}
+                <Image
+                    boxSize='300px'
+                    objectFit='cover'
                     src={image !== null ? image : avatar}
+                    alt='Фото аватарка'
                 />
                 <form
                     className={styles.form}
@@ -102,20 +104,16 @@ const AvatarForm = ({user, session}: IAvatarFormProps): JSX.Element => {
                     name="upload-avatar "
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <Tooltip label="Загрузить фото"  bg='white' color='black' placement='right-start' openDelay={200} aria-label="A tooltip" >
+
                         <FormLabel
-                            position="absolute"
-                            color="#232323"
-                            borderRadius="50%"
-                            backgroundColor="rgb(0,0,0,0.5)"
-                            w={50}
+                            w={300}
                             h={50}
                             display="flex"
                             justifyContent="center"
                             alignItems="center"
                             _hover={{cursor: 'pointer'}}
-                            top="-20px"
-                            left="30px"
+                            margin={0}
+                            mt={3}
                         >
 
                             <VisuallyHidden>
@@ -128,9 +126,12 @@ const AvatarForm = ({user, session}: IAvatarFormProps): JSX.Element => {
                             </VisuallyHidden>
 
 
-                            <Icon fontSize={25} color="white" as={MdAddAPhoto}/>
+                            <Icon
+                                fontSize={45}
+                                color="rgb(0,0,0,0.5)"
+                                as={FaFileUpload}
+                                _hover={{color: "rgb(0,0,0,1)"}}/>
                         </FormLabel>
-                    </Tooltip>
 
                     <FormErrorMessage>
                         {errors.avatar && errors.avatar.message}
@@ -143,7 +144,7 @@ const AvatarForm = ({user, session}: IAvatarFormProps): JSX.Element => {
                         type="submit"
                         color="#ffffff"
                         bg="#2441e7"
-                        mt={50}
+                        mt={5}
                     >Сохранить</ThemeButton>
 
                 </form>

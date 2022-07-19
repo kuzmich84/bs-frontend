@@ -2,28 +2,38 @@ import {getSession, signOut, useSession} from 'next-auth/react'
 import {GetServerSideProps} from 'next'
 
 import {
+    Avatar,
     Box,
     Container,
     Flex,
     Grid,
     GridItem,
-    Heading, Link, List, ListIcon, ListItem,
-    Spacer, Stack,
+    Heading, Icon, IconButton, Link, List, ListIcon, ListItem,
+    Spacer, Stack, Tooltip, VStack,
 } from '@chakra-ui/react'
 import {AppRoute} from '../../interfaces/const'
 import {fetchAPI} from '../../lib/api'
 import NextBreadcrumb from '../../components/Layout/Breadcrumb/NextBreadcrumb'
 import {IProfilePage} from '../../interfaces/pages.interface'
-import React from 'react'
-import AvatarForm from '../../components/Forms/AvatarForm/AvatarForm'
+import React, {useState} from 'react'
 import ProfileForm from '../../components/Forms/ProfileForm/ProfileForm'
 import {FiSettings, FiLogOut} from 'react-icons/fi'
 import NextLink from 'next/link'
+import {MdAddAPhoto} from "react-icons/md";
+import ModalAvatar from "../../components/Modal/ModalAvatar/ModalAvatar";
+import {useRouter} from "next/router";
 
 
 const Profile = ({user}: IProfilePage): JSX.Element => {
 
     const {data: session} = useSession()
+    const [isModalAvatar, setIsModalAvatar] = useState<boolean>(false)
+
+
+    const onCloseModalAvatar = () => {
+        setIsModalAvatar(false);
+    }
+
 
     return (
         <Box as="section" backgroundColor="#f9fafc" padding="60px">
@@ -77,7 +87,42 @@ const Profile = ({user}: IProfilePage): JSX.Element => {
                                 fontWeight={500}
                             >Личные данные</Heading>
                             <Flex pt={5}>
-                                <AvatarForm user={user} session={session}/>
+                                <VStack
+                                    pl={10}
+                                    pr={10}
+                                    pt={5}
+                                    position="relative"
+
+                                >
+                                    <Avatar
+                                        size="2xl"
+                                        name={user.username}
+                                        src={user.avatar}
+
+                                    />
+                                    <Tooltip label="Загрузить фото" bg='white' color='black' placement='right-start'
+                                             openDelay={200} aria-label="A tooltip">
+                                        <IconButton
+                                            onClick={() => setIsModalAvatar(true)}
+                                            position="absolute"
+                                            color="#232323"
+                                            borderRadius="50%"
+                                            backgroundColor="rgb(0,0,0,0.5)"
+                                            w={50}
+                                            h={50}
+                                            display="flex"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                            _hover={{cursor: 'pointer'}}
+                                            top="100px"
+                                            right="30px"
+                                            aria-label='Загрузить фото'
+                                            icon={<Icon fontSize={25} color="white" as={MdAddAPhoto}/>}/>
+                                    </Tooltip>
+
+                                    <ModalAvatar user={user} session={session} isModalOpen={isModalAvatar}
+                                                 onClose={onCloseModalAvatar}/>
+                                </VStack>
                                 <ProfileForm user={user}/>
                             </Flex>
                         </Box>

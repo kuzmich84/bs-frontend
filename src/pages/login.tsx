@@ -4,6 +4,7 @@ import React from 'react'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
 import {AppRoute} from '../interfaces/const'
+import Layout from "../components/Layout/Layout";
 
 
 const Login = (): JSX.Element => {
@@ -36,4 +37,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {session},
     }
 }
+Login.layout = Layout
 export default Login

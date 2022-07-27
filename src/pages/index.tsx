@@ -1,9 +1,9 @@
-import type {NextPage} from 'next'
 import Head from 'next/head'
 import TopCourseList from '../components/TopCourseList/TopCourseList'
+import Layout from "../components/Layout/Layout";
 
 
-const Home: NextPage = () => {
+const Home = (): JSX.Element => {
     return (
         <div>
             <Head>
@@ -16,4 +16,5 @@ const Home: NextPage = () => {
     )
 }
 
+Home.layout = Layout
 export default Home

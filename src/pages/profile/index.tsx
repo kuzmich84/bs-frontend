@@ -21,7 +21,7 @@ import {FiSettings, FiLogOut} from 'react-icons/fi'
 import NextLink from 'next/link'
 import {MdAddAPhoto} from "react-icons/md";
 import ModalAvatar from "../../components/Modal/ModalAvatar/ModalAvatar";
-import {useRouter} from "next/router";
+import LayoutProfile from "../../components/Layout/LayoutProfile";
 
 
 const Profile = ({user}: IProfilePage): JSX.Element => {
@@ -158,5 +158,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 }
 
+Profile.layout = LayoutProfile
 export default Profile
 

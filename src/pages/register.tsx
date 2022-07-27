@@ -5,8 +5,9 @@ import RegisterForm from '../components/Forms/RegisterForm/RegisterForm'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
 import {AppRoute} from '../interfaces/const'
+import Layout from "../components/Layout/Layout";
 
-const Register: NextPage = () => {
+const Register = (): JSX.Element => {
     return (
         <Box as="section" bg="#fafafa" padding="60px 0" minHeight={'70vh'}>
             <Container maxWidth={{md: '720px', lg: '1024px', xl: '1320px'}}>
@@ -35,4 +36,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 }
 
+Register.layout = Layout
 export default Register

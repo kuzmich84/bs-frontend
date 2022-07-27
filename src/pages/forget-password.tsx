@@ -1,8 +1,9 @@
 import EmailForm from '../components/Forms/EmailForm/EmailForm'
-import {Container, Heading, VStack, Text, Box, useColorModeValue, Flex} from '@chakra-ui/react'
+import {Container, Box, Flex} from '@chakra-ui/react'
 import {GetServerSideProps} from 'next'
 import {getSession} from 'next-auth/react'
 import {AppRoute} from '../interfaces/const'
+import Layout from "../components/Layout/Layout";
 
 const forgetPassword = (): JSX.Element => {
     return (
@@ -35,8 +36,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {session},
     }
-
 }
+
+forgetPassword.layout = Layout
 export default forgetPassword
 
 

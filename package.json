@@ -21,6 +21,7 @@
     "axios": "^0.27.2",
     "browserslist": "^4.20.3",
     "chakra-react-select": "^3.3.1",
+    "classnames": "^2.3.1",
     "formidable": "2.0.1",
     "framer-motion": "^6.5.1",
     "hex-rgb": "^5.0.0",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/classnames": "^2.3.1",
     "@types/formidable": "^2.0.5",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/multer": "^1.4.7",

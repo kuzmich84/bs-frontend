@@ -1,11 +1,10 @@
-import React, {useRef, useState} from 'react'
+import React from 'react'
 import {IMainMenuProps} from './IMainMenu.props'
-import styles from './MainMenu.module.scss'
 import NextLink from 'next/link'
 import {MdSearch} from 'react-icons/md'
 import {
+    Avatar,
     Box,
-    Container,
     Flex,
     Heading,
     IconButton,
@@ -18,20 +17,21 @@ import {
 import ModalSearch from '../../Modal/ModalSearch/ModalSearch'
 import MenuGamburger from './MenuGamburger/MenuGamburger'
 
-const MainMenu = ({pages}: IMainMenuProps): JSX.Element => {
+const MainMenu = ({pages, profile}: IMainMenuProps): JSX.Element => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const variantIconSearch = useBreakpointValue({base: 35, md: 20})
 
 
     return (
-        <Container maxWidth={{base: '960px', xl: 'container.xl'}}>
+        <>
             <Flex minWidth="max-content" alignItems="center" gap="2" height={20}>
                 <Box p="2">
                     <Link href="/">
                         <Heading fontSize={{base: '25px', lg: '36px'}}>Beauty Schools</Heading>
                     </Link>
                 </Box>
-                <Box as="nav" display={{base: 'none', md: 'block'}} alignItems="center" marginLeft="auto">
+                <Box as="nav" display={{base: 'none', md: 'block'}} alignItems="center"
+                     marginLeft={profile ? "20px" : "auto"}>
                     <List gap="8" display="flex" fontFamily="Nunito" textTransform="uppercase">
                         {pages.map((page) => (
                             <ListItem key={page.name}>
@@ -42,13 +42,26 @@ const MainMenu = ({pages}: IMainMenuProps): JSX.Element => {
                     </List>
                 </Box>
                 <Box display={{base: 'flex'}} marginLeft={{base: 'auto', md: 15}}>
-                    <IconButton onClick={onOpen} aria-label="Search database" variant="unstyled"
-                                icon={<MdSearch size={variantIconSearch}/>}/>
+                    {!profile && (
+                        <IconButton onClick={onOpen} aria-label="Search database" variant="unstyled"
+                                    icon={<MdSearch size={variantIconSearch}/>}/>
+                    )}
                     <MenuGamburger/>
                 </Box>
+
+                {profile && (
+                    <Box display={{base: 'flex'}} marginLeft="auto">
+                        <Avatar
+                            size={'md'}
+                            src={'https://avatars.dicebear.com/api/male/username.svg'}
+                        />
+                    </Box>
+                )}
+
+
             </Flex>
             <ModalSearch isOpen={isOpen} onClose={onClose}/>
-        </Container>
+        </>
     )
 }
 

@@ -5,4 +5,5 @@ export interface IMenuItem {
 
 export interface IMainMenuProps {
     pages: IMenuItem[],
+    profile?: boolean
 }
